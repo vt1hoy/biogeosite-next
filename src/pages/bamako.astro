@@ -1,0 +1,794 @@
+---
+/**
+ * Bamako GIS case page — section order: intro → maps → PDFs → code → workflow → pipeline.
+ */
+import SiteLayout2 from "../layouts/SiteLayout2.astro";
+
+const pageTranslations = {
+  ru: {
+    title: "Бамако - минеральные ресурсы",
+    subtitle:
+      "Пилотный GIS-кейс по пространственному анализу месторождений в Мали на основе данных USGS MRDS: типы ресурсов, расстояние до Бамако и локальная кластеризация (100 км радиус)."
+  },
+  en: {
+    title: "Bamako — mineral resources",
+    subtitle:
+      "Pilot GIS case study on spatial analysis of mineral occurrences in Mali using USGS MRDS data: commodity types, distance from Bamako, and local clustering (100 km radius)."
+  },
+  fr: {
+    title: "Bamako — ressources minérales",
+    subtitle:
+      "Étude de cas SIG pilote sur l’analyse spatiale des occurrences minérales au Mali à partir des données USGS MRDS : types de ressources, distance à Bamako et clustering local (rayon de 100 km)."
+  }
+};
+
+const images = [
+  { src: "/assets/bamako/images/commodity_type_distance.png" },
+  { src: "/assets/bamako/images/local_clustering.png" }
+];
+
+const pdfs = [{ file: "/assets/bamako/pdf/brief_bamako.pdf" }];
+
+const pipelineScripts = [
+  { name: "1. distance.sql", file: "/assets/bamako/code/distance.sql" },
+  { name: "2. density.sql", file: "/assets/bamako/code/density.sql" },
+  { name: "3. distance_class.sql", file: "/assets/bamako/code/distance_class.sql" },
+  { name: "4. local_neighborhood.sql", file: "/assets/bamako/code/local_neighborhood.sql" }
+];
+
+const codeFetchTargets = [
+  { id: "code1", path: "/assets/bamako/code/distance_class.sql" },
+  { id: "code2", path: "/assets/bamako/code/local_neighborhood.sql" }
+];
+
+const translations = {
+  ru: {
+    caseLabel: "Кейс",
+    caseIntro:
+      "Этот кейс представляет пилотный spatial analysis распределения месторождений в Мали на основе данных USGS MRDS. Анализ включает классификацию по расстоянию до Бамако и оценку локальной плотности (100 км радиус), чтобы выявить пространственные паттерны и зоны концентрации ресурсов.",
+    caseResultsTitle: "Что получилось",
+    caseResults: [
+      "Выявлен выраженный кластер диатомитовых месторождений на севере Мали с высокой плотностью (до 9 соседей в радиусе 100 км).",
+      "Южная часть характеризуется более разреженной полиметаллической зоной (золото, литий, марганец).",
+      "Западный регион (Kayes) формирует отдельную зону с золотом, алюминием и алмазами.",
+      "Восточные месторождения (фосфаты и марганец) представлены изолированными точками с низкой плотностью.",
+      "Итоговая структура показывает контраст между кластеризованными и дисперсными типами ресурсов."
+    ],
+    maps: "Карты",
+    pdf: "PDF",
+    workflow: "Workflow",
+    python: "SQL / PostGIS",
+    pipeline: "Full pipeline",
+    pipelineSubtitle: "Полная последовательность скриптов по кейсу",
+    pdfOpen: "Открыть PDF",
+    fileOpen: "Открыть файл",
+    scriptOpen: "Скачать / открыть",
+    copy: "Копировать",
+    copied: "Скопировано",
+    imageTitles: ["Типы ресурсов и расстояние до Бамако", "Локальная плотность месторождений"],
+    pdfTitles: ["Аналитическая записка"],
+    workflowItems: [
+      {
+        title: "Workflow 1 — подготовка данных",
+        steps: [
+          "Импорт данных MRDS в PostGIS (shp2pgsql)",
+          "Проверка геометрии и структуры таблицы",
+          "Задание точки Бамако (reference point)",
+          "Подготовка атрибутов для анализа"
+        ]
+      },
+      {
+        title: "Workflow 2 — пространственный анализ",
+        steps: [
+          "Расчёт расстояния до Бамако (distance_class.sql)",
+          "Классификация на high / medium / low",
+          "Расчёт локальной плотности (ST_DWithin, 100 км)",
+          "Подсчёт соседних точек (local_neighborhood.sql)",
+          "Экспорт результатов в QGIS",
+          "Визуализация и оформление карт"
+        ]
+      }
+    ],
+    codeTitle1: "SQL — классификация по расстоянию до Бамако",
+    codeTitle2: "SQL — анализ локальной плотности (100 км)",
+    codeDesc1:
+      "Рассчитывает расстояние от каждого месторождения до Бамако и классифицирует его по уровням доступности (high / medium / low)",
+    codeDesc2:
+      "Определяет количество соседних месторождений в радиусе 100 км для оценки локальной плотности",
+    codeLoadError: "Ошибка загрузки кода"
+  },
+
+  en: {
+    caseLabel: "Case",
+    caseIntro:
+      "This case study presents a pilot spatial analysis of mineral occurrences in Mali using USGS MRDS data. The analysis includes distance-based classification from Bamako and local density assessment (100 km radius) to identify spatial patterns and resource concentration zones.",
+    caseResultsTitle: "Key results",
+    caseResults: [
+      "A strong cluster of diatomite deposits is identified in northern Mali, with high density (up to 9 neighboring occurrences within 100 km).",
+      "The southern region shows a more dispersed polymetallic structure (gold, lithium, manganese).",
+      "The western region (Kayes) forms a distinct zone with gold, aluminum, and diamond occurrences.",
+      "Eastern deposits (phosphates and manganese) appear as isolated, low-density occurrences.",
+      "The overall pattern highlights a contrast between clustered and dispersed resource distributions."
+    ],
+    maps: "Maps",
+    pdf: "PDF",
+    workflow: "Workflow",
+    python: "SQL / PostGIS",
+    pipeline: "Full pipeline",
+    pipelineSubtitle: "Complete script sequence used in this case",
+    pdfOpen: "Open PDF",
+    fileOpen: "Open file",
+    scriptOpen: "Download / open",
+    copy: "Copy",
+    copied: "Copied",
+    imageTitles: ["Commodity type and distance from Bamako", "Local clustering of mineral occurrences"],
+    pdfTitles: ["GIS Analysis Brief"],
+    workflowItems: [
+      {
+        title: "Workflow 1 — data preparation",
+        steps: [
+          "Import MRDS data into PostGIS (shp2pgsql)",
+          "Validate geometry and table structure",
+          "Define Bamako reference point",
+          "Prepare attributes for analysis"
+        ]
+      },
+      {
+        title: "Workflow 2 — spatial analysis",
+        steps: [
+          "Compute distance to Bamako (distance_class.sql)",
+          "Classify into high / medium / low",
+          "Calculate local density",
+          "Count neighboring occurrences",
+          "Export results to QGIS",
+          "Visualization and map design"
+        ]
+      }
+    ],
+    codeTitle1: "SQL — distance-based classification from Bamako",
+    codeTitle2: "SQL — local neighborhood density analysis (100 km)",
+    codeDesc1:
+      "Calculates the distance from each occurrence to Bamako and classifies it into accessibility levels (high / medium / low)",
+    codeDesc2:
+      "Calculates the number of neighboring occurrences within a 100 km radius to estimate local density",
+    codeLoadError: "Code loading error"
+  },
+
+  fr: {
+    caseLabel: "Cas",
+    caseIntro:
+      "Cette étude présente une analyse spatiale pilote des occurrences minérales au Mali à partir des données USGS MRDS. L’analyse inclut une classification par distance à Bamako et une évaluation de la densité locale (rayon de 100 km) afin d’identifier les structures spatiales et les zones de concentration.",
+    caseResultsTitle: "Résultats clés",
+    caseResults: [
+      "Un cluster marqué de diatomite est identifié dans le nord du Mali, avec une forte densité (jusqu’à 9 occurrences voisines dans un rayon de 100 km).",
+      "La région sud présente une structure polymétallique plus dispersée (or, lithium, manganèse).",
+      "La région ouest (Kayes) forme une zone distincte avec or, aluminium et diamants.",
+      "Les occurrences à l’est (phosphates et manganèse) sont isolées et de faible densité.",
+      "L’ensemble met en évidence un contraste entre distributions clusterisées et dispersées."
+    ],
+    maps: "Cartes",
+    pdf: "PDF",
+    workflow: "Workflow",
+    python: "SQL / PostGIS",
+    pipeline: "Full pipeline",
+    pipelineSubtitle: "Séquence complète des scripts utilisés dans ce cas",
+    pdfOpen: "Ouvrir le PDF",
+    fileOpen: "Ouvrir le fichier",
+    scriptOpen: "Télécharger / ouvrir",
+    copy: "Copier",
+    copied: "Copié",
+    imageTitles: ["Type de ressource et distance à Bamako", "Clustering local des occurrences minérales"],
+    pdfTitles: ["Note d’analyse SIG"],
+    workflowItems: [
+      {
+        title: "Workflow 1 — préparation des données",
+        steps: [
+          "Import des données MRDS dans PostGIS (shp2pgsql)",
+          "Vérification de la géométrie et de la structure",
+          "Définition du point de référence (Bamako)",
+          "Préparation des attributs pour l’analyse"
+        ]
+      },
+      {
+        title: "Workflow 2 — analyse spatiale",
+        steps: [
+          "Calcul de la distance à Bamako (distance_class.sql)",
+          "Classification en high / medium / low",
+          "Calcul de la densité locale (100 km)",
+          "Comptage des occurrences voisines",
+          "Export vers QGIS",
+          "Visualisation et mise en carte"
+        ]
+      }
+    ],
+    codeTitle1: "Python — prétraitement et alignement",
+    codeTitle2: "Python — modèle de convenance",
+    codeDesc1:
+      "Calcule la distance de chaque occurrence à Bamako et la classe selon le niveau d’accessibilité (high / medium / low)",
+    codeDesc2:
+      "Calcule le nombre d’occurrences voisines dans un rayon de 100 km pour estimer la densité locale",
+    codeLoadError: "Erreur de chargement du code"
+  }
+};
+---
+
+<SiteLayout2 pageTranslations={pageTranslations}>
+  <style>
+    .block {
+      --case-border: #d9e1ea;
+      --case-surface: rgba(255, 255, 255, 0.96);
+      --case-surface-muted: #fbfdff;
+      --case-heading: #1d3d67;
+      --case-subheading: #284a73;
+      --case-text: #425b78;
+      --case-muted: #5d6f86;
+      --case-link: #174b87;
+
+      background: var(--case-surface);
+      padding: 26px 24px;
+      border-radius: 18px;
+      margin-bottom: 24px;
+      border: 1px solid var(--case-border);
+      box-shadow: 0 8px 20px rgba(40, 60, 90, 0.05);
+    }
+
+    .block h2 {
+      margin: 0 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e8edf3;
+      color: var(--case-heading);
+      font-size: 28px;
+      letter-spacing: -0.02em;
+    }
+
+    .intro-text {
+      color: var(--case-text);
+      line-height: 1.72;
+      font-size: 15px;
+      margin-bottom: 18px;
+      max-width: 980px;
+    }
+
+    .findings-title {
+      color: var(--case-subheading);
+      margin: 22px 0 12px;
+      font-size: 18px;
+    }
+
+    .findings-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--case-text);
+      line-height: 1.8;
+      list-style-type: disc;
+    }
+
+    .findings-list li {
+      margin-bottom: 4px;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .image-card {
+      background: #fff;
+      border: 1px solid #dde5ed;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .image-card img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    .image-caption {
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--case-muted);
+    }
+
+    .image-caption a {
+      color: var(--case-link);
+      font-weight: 600;
+    }
+
+    .pdf-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .pdf-card {
+      background: var(--case-surface-muted);
+      border: 1px solid #e1e8f0;
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .pdf-card h3 {
+      margin: 0 0 12px;
+      color: var(--case-subheading);
+      font-size: 18px;
+    }
+
+    .pdf-card a {
+      color: var(--case-link);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .workflow-item {
+      background: var(--case-surface-muted);
+      border: 1px solid #e1e8f0;
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .workflow-item h3 {
+      margin: 0 0 14px;
+      color: var(--case-subheading);
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .workflow-item ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      line-height: 1.75;
+      color: var(--case-text);
+      list-style-type: disc;
+    }
+
+    .workflow-item li {
+      margin-bottom: 6px;
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .pipeline-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--case-surface-muted);
+      border: 1px solid #e1e8f0;
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .script-name {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--case-heading);
+      font-family: Consolas, monospace;
+      line-height: 1.45;
+    }
+
+    .pipeline-card a {
+      color: var(--case-link);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .code-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+
+    .code-card {
+      background: var(--case-surface-muted);
+      border: 1px solid #e1e8f0;
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .code-card h3 {
+      margin: 0 0 12px;
+      color: var(--case-subheading);
+    }
+
+    .code-description {
+      margin-bottom: 14px;
+      color: #5b6d85;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .code-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .code-top a {
+      color: var(--case-link);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .btn {
+      background: var(--case-link);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      opacity: 0.92;
+    }
+
+    .code-block {
+      background: #0f1722;
+      color: #d9e7ff;
+      padding: 16px;
+      border-radius: 12px;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      overflow-x: auto;
+      overflow-y: auto;
+      line-height: 1.55;
+      max-height: 420px;
+      font-size: 13px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    .code-card,
+    .code-block,
+    .pipeline-card,
+    .workflow-item,
+    .pdf-card,
+    .image-card {
+      min-width: 0;
+    }
+
+    .code-card h3,
+    .code-description,
+    .code-top a,
+    .script-name,
+    .image-caption a,
+    .pdf-card h3,
+    .workflow-item h3,
+    .block p,
+    .block li {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (max-width: 1100px) {
+      .pipeline-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .image-grid,
+      .workflow-grid,
+      .pipeline-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .block {
+        padding: 18px 16px;
+        border-radius: 14px;
+      }
+
+      .block h2 {
+        font-size: 22px;
+        line-height: 1.2;
+      }
+
+      .block h3,
+      .code-card h3,
+      .workflow-item h3,
+      .pdf-card h3 {
+        font-size: 17px;
+        line-height: 1.3;
+      }
+
+      .code-card,
+      .pipeline-card,
+      .workflow-item,
+      .pdf-card {
+        padding: 16px;
+        border-radius: 12px;
+      }
+
+      .code-top {
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .code-block {
+        font-size: 11px;
+        padding: 12px;
+      }
+    }
+  </style>
+
+  <!-- 1. Description / context -->
+  <div class="block">
+    <h2 id="intro-heading">{translations.ru.caseLabel}</h2>
+    <div class="intro-text" id="intro-text">{translations.ru.caseIntro}</div>
+
+    <h3 class="findings-title" id="findings-heading">{translations.ru.caseResultsTitle}</h3>
+
+    <ul class="findings-list" id="findings-list">
+      {translations.ru.caseResults.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- 2. Maps -->
+  <div class="block">
+    <h2 id="maps-heading">{translations.ru.maps}</h2>
+
+    <div class="image-grid">
+      {images.map((item, index) => (
+        <div class="image-card">
+          <a href={item.src} target="_blank" rel="noopener noreferrer">
+            <img src={item.src} alt={`bamako-image-${index + 1}`} />
+          </a>
+          <div class="image-caption">
+            <a href={item.src} target="_blank" rel="noopener noreferrer" id={`image-title-${index}`}>
+              {translations.ru.imageTitles[index]}
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 3. PDFs -->
+  <div class="block">
+    <h2 id="pdf-heading">{translations.ru.pdf}</h2>
+
+    <div class="pdf-grid">
+      {pdfs.map((pdf, index) => (
+        <div class="pdf-card">
+          <h3 id={`pdf-title-${index}`}>{translations.ru.pdfTitles[index]}</h3>
+          <a href={pdf.file} target="_blank" rel="noopener noreferrer" class="pdf-open">
+            {translations.ru.pdfOpen}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 4. Code blocks -->
+  <div class="block">
+    <h2 id="python-heading">{translations.ru.python}</h2>
+
+    <div class="code-grid">
+      <div class="code-card">
+        <h3 id="code-title-1">{translations.ru.codeTitle1}</h3>
+
+        <div class="code-description" id="code-desc-1">{translations.ru.codeDesc1}</div>
+
+        <div class="code-top">
+          <a
+            href="/assets/bamako/code/distance_class.sql"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="code-open"
+          >
+            {translations.ru.fileOpen}
+          </a>
+          <button type="button" class="btn copy-btn" onclick="copyCode('code1', this)">
+            {translations.ru.copy}
+          </button>
+        </div>
+
+        <pre class="code-block" id="code1">Загрузка...</pre>
+      </div>
+
+      <div class="code-card">
+        <h3 id="code-title-2">{translations.ru.codeTitle2}</h3>
+
+        <div class="code-description" id="code-desc-2">{translations.ru.codeDesc2}</div>
+
+        <div class="code-top">
+          <a
+            href="/assets/bamako/code/local_neighborhood.sql"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="code-open"
+          >
+            {translations.ru.fileOpen}
+          </a>
+          <button type="button" class="btn copy-btn" onclick="copyCode('code2', this)">
+            {translations.ru.copy}
+          </button>
+        </div>
+
+        <pre class="code-block" id="code2">Загрузка...</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Workflow -->
+  <div class="block">
+    <h2 id="workflow-heading">{translations.ru.workflow}</h2>
+
+    <div class="workflow-grid">
+      {translations.ru.workflowItems.map((wf, wfIndex) => (
+        <div class="workflow-item">
+          <h3 id={`workflow-title-${wfIndex}`}>{wf.title}</h3>
+          <ul id={`workflow-steps-${wfIndex}`}>
+            {wf.steps.map((step) => (
+              <li>{step}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 6. Full pipeline -->
+  <div class="block">
+    <h2 id="pipeline-heading">{translations.ru.pipeline}</h2>
+    <div class="intro-text" id="pipeline-intro">{translations.ru.pipelineSubtitle}</div>
+
+    <div class="pipeline-grid">
+      {pipelineScripts.map((script, index) => (
+        <div class="pipeline-card">
+          <p class="script-name">{script.name}</p>
+          <a href={script.file} target="_blank" rel="noopener noreferrer" class="script-open">
+            {translations.ru.scriptOpen}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <script define:vars={{ translations, codeFetchTargets }}>
+    const i18n = translations;
+    const LANG_KEY = "lang";
+
+    /** [element id, key on current locale bundle] */
+    const staticTextFields = [
+      ["intro-heading", "caseLabel"],
+      ["intro-text", "caseIntro"],
+      ["findings-heading", "caseResultsTitle"],
+      ["maps-heading", "maps"],
+      ["pdf-heading", "pdf"],
+      ["workflow-heading", "workflow"],
+      ["python-heading", "python"],
+      ["pipeline-heading", "pipeline"],
+      ["pipeline-intro", "pipelineSubtitle"],
+      ["code-title-1", "codeTitle1"],
+      ["code-title-2", "codeTitle2"],
+      ["code-desc-1", "codeDesc1"],
+      ["code-desc-2", "codeDesc2"]
+    ];
+
+    function setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    function fillListElement(id, items) {
+      const root = document.getElementById(id);
+      if (!root) return;
+      root.replaceChildren(
+        ...items.map((text) => {
+          const li = document.createElement("li");
+          li.textContent = text;
+          return li;
+        })
+      );
+    }
+
+    function applyIndexedTitles(prefix, titles) {
+      titles.forEach((title, index) => {
+        setText(`${prefix}-${index}`, title);
+      });
+    }
+
+    function applyBamakoCopy(lang) {
+      const t = i18n[lang];
+      if (!t) return;
+
+      for (const [id, key] of staticTextFields) {
+        setText(id, t[key]);
+      }
+
+      fillListElement("findings-list", t.caseResults);
+
+      t.workflowItems.forEach((wf, wfIndex) => {
+        setText(`workflow-title-${wfIndex}`, wf.title);
+        fillListElement(`workflow-steps-${wfIndex}`, wf.steps);
+      });
+
+      applyIndexedTitles("image-title", t.imageTitles);
+      applyIndexedTitles("pdf-title", t.pdfTitles);
+
+      document.querySelectorAll(".pdf-open").forEach((el) => {
+        el.textContent = t.pdfOpen;
+      });
+      document.querySelectorAll(".code-open").forEach((el) => {
+        el.textContent = t.fileOpen;
+      });
+      document.querySelectorAll(".script-open").forEach((el) => {
+        el.textContent = t.scriptOpen;
+      });
+      document.querySelectorAll(".copy-btn").forEach((btn) => {
+        btn.textContent = t.copy;
+        btn.dataset.copyLabel = t.copy;
+        btn.dataset.copiedLabel = t.copied;
+      });
+    }
+
+    async function loadCode(id, path) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      try {
+        const res = await fetch(path);
+        if (!res.ok) throw new Error("fetch failed");
+        el.textContent = await res.text();
+      } catch {
+        const lang = localStorage.getItem(LANG_KEY) || "ru";
+        el.textContent = i18n[lang]?.codeLoadError ?? i18n.ru.codeLoadError;
+      }
+    }
+
+    window.copyCode = function (id, btn) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const text = el.textContent;
+      navigator.clipboard.writeText(text);
+
+      const copiedLabel = btn.dataset.copiedLabel || "Скопировано";
+      const copyLabel = btn.dataset.copyLabel || "Копировать";
+
+      btn.textContent = copiedLabel;
+      setTimeout(() => {
+        btn.textContent = copyLabel;
+      }, 1200);
+    };
+
+    function initBamakoPage() {
+      applyBamakoCopy(localStorage.getItem(LANG_KEY) || "ru");
+
+      window.addEventListener("languageChanged", (event) => {
+        applyBamakoCopy(event.detail.lang);
+      });
+
+      for (const { id, path } of codeFetchTargets) {
+        loadCode(id, path);
+      }
+    }
+
+    initBamakoPage();
+  </script>
+</SiteLayout2>

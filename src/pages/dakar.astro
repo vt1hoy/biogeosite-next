@@ -1,0 +1,835 @@
+---
+/**
+ * Dakar GIS case page — section order: intro → maps → PDFs → workflow → code → pipeline.
+ */
+import SiteLayout2 from "../layouts/SiteLayout2.astro";
+
+const pageTranslations = {
+  ru: {
+    title: "Дакар — урбанизм",
+    subtitle:
+      "Пилотный кейс по пешей доступности медицинской инфраструктуры в городской зоне Дакара на основе OSM, WorldPop и Python GIS workflow."
+  },
+  en: {
+    title: "Dakar — urbanism",
+    subtitle:
+      "A pilot case on pedestrian access to healthcare infrastructure in urban Dakar based on OSM, WorldPop, and a Python GIS workflow."
+  },
+  fr: {
+    title: "Dakar — urbanisme",
+    subtitle:
+      "Un cas pilote sur l'accessibilité piétonne à l'infrastructure de santé dans l'espace urbain de Dakar à partir d'OSM, WorldPop et d'un workflow SIG en Python."
+  }
+};
+
+const images = [
+  { src: "/assets/dakar/images/health_distance.png" },
+  { src: "/assets/dakar/images/health_score.png" }
+];
+
+const pdfs = [{ file: "/assets/dakar/pdf/dakar_health_access_brief.pdf" }];
+
+const pipelineFiles = [
+  "/assets/dakar/code/dakar_walk_network.py",
+  "/assets/dakar/code/dakar_health_osm.py",
+  "/assets/dakar/code/clip_population.py",
+  "/assets/dakar/code/population_grid.py",
+  "/assets/dakar/code/population_grid_300m.py",
+  "/assets/dakar/code/prepare_health_32628.py",
+  "/assets/dakar/code/build_urban_mask.py",
+  "/assets/dakar/code/clip_population_grid_to_mask.py",
+  "/assets/dakar/code/accessibility_nearest.py"
+];
+
+const codeFetchTargets = [
+  { id: "code1", path: "/assets/dakar/code/dakar_walk_network.py" },
+  { id: "code2", path: "/assets/dakar/code/accessibility_nearest.py" }
+];
+
+const translations = {
+  ru: {
+    introTitle: "Кейс",
+    introText:
+      "Этот кейс разбирает пешую доступность медицинской инфраструктуры в городской зоне Дакара. Я собрал рабочий GIS pipeline на основе OpenStreetMap, WorldPop и Python, чтобы посмотреть, насколько неравномерно по городу распределён доступ к ближайшему медицинскому объекту.",
+    keyFindingsTitle: "Что получилось",
+    keyFindings: [
+      "Медианная дистанция до ближайшего медобъекта: ~1.05 км",
+      "25% populated cells находятся в пределах 457 м от ближайшего объекта",
+      "25% populated cells расположены дальше 4.12 км",
+      "Центральная часть городской ткани обеспечена лучше, чем периферийные зоны"
+    ],
+    maps: "Карты",
+    pdf: "PDF",
+    workflow: "Workflow",
+    python: "Python / GeoPandas",
+    pipelineTitle: "Full pipeline",
+    pipelineIntro: "Полная последовательность скриптов по кейсу.",
+    pdfOpen: "Открыть PDF",
+    fileOpen: "Открыть файл",
+    copy: "Копировать",
+    copied: "Скопировано",
+    imageTitles: [
+      "Distance to nearest healthcare facility",
+      "Simple healthcare access score"
+    ],
+    pdfTitles: ["Dakar Healthcare Access Proxy — Field Brief"],
+    workflowItems: [
+      {
+        title: "Workflow 1 — nearest facility accessibility model",
+        steps: [
+          "Загрузка пешеходной уличной сети Дакара из OSM",
+          "Извлечение медицинских объектов из OSM",
+          "Обрезка WorldPop raster по зоне исследования",
+          "Перевод population raster в сетку и агрегация до 300 м",
+          "Расчёт расстояния от populated cells до ближайшего медобъекта",
+          "Расчёт простого access score",
+          "Экспорт итогового GIS-ready слоя"
+        ]
+      },
+      {
+        title: "Workflow 2 — urban mask and study area refinement",
+        steps: [
+          "Репроекция street network в метрическую CRS",
+          "Построение буфера вокруг уличной сети",
+          "Сборка единой urban mask",
+          "Обрезка population grid по реальной городской зоне",
+          "Повторный расчёт distance-based accessibility",
+          "Сравнение результата до и после уточнения study area"
+        ]
+      }
+    ],
+    pipelineLabels: [
+      "1. Walk network",
+      "2. Health facilities",
+      "3. Clip population raster",
+      "4. Population grid",
+      "5. Population grid 300 m",
+      "6. Health reprojection + capacity",
+      "7. Urban mask",
+      "8. Clip grid to urban mask",
+      "9. Nearest accessibility"
+    ],
+    codeTitle1: "Python — walk network preprocessing",
+    codeTitle2: "Python — nearest healthcare accessibility",
+    codeDesc1: "OSMnx → walk network → nodes / edges → GeoJSON",
+    codeDesc2: "population grid → nearest facility → dist_m / access_score",
+    codeLoadError: "Ошибка загрузки кода"
+  },
+
+  en: {
+    introTitle: "Case",
+    introText:
+      "This case examines pedestrian access to healthcare infrastructure across urban Dakar. I built a working GIS pipeline based on OpenStreetMap, WorldPop, and Python to measure how unevenly access to the nearest healthcare facility is distributed across the city.",
+    keyFindingsTitle: "Key results",
+    keyFindings: [
+      "Median distance to the nearest healthcare facility: ~1.05 km",
+      "25% of populated cells are within 457 m of the nearest facility",
+      "25% of populated cells are farther than 4.12 km",
+      "The central urban fabric is better served than peripheral zones"
+    ],
+    maps: "Maps",
+    pdf: "PDF",
+    workflow: "Workflow",
+    python: "Python / GeoPandas",
+    pipelineTitle: "Full pipeline",
+    pipelineIntro: "Complete script sequence used in this case.",
+    pdfOpen: "Open PDF",
+    fileOpen: "Open file",
+    copy: "Copy",
+    copied: "Copied",
+    imageTitles: [
+      "Distance to nearest healthcare facility",
+      "Simple healthcare access score"
+    ],
+    pdfTitles: ["Dakar Healthcare Access Proxy — Field Brief"],
+    workflowItems: [
+      {
+        title: "Workflow 1 — nearest facility accessibility model",
+        steps: [
+          "Download Dakar pedestrian street network from OSM",
+          "Extract healthcare facilities from OSM",
+          "Clip the WorldPop population raster to the study area",
+          "Convert the population raster to a grid and aggregate to 300 m",
+          "Calculate the distance from populated cells to the nearest facility",
+          "Compute a simple access score",
+          "Export the final GIS-ready layer"
+        ]
+      },
+      {
+        title: "Workflow 2 — urban mask and study area refinement",
+        steps: [
+          "Reproject the street network to a metric CRS",
+          "Build a buffer around the street network",
+          "Merge buffers into a single urban mask",
+          "Clip the population grid to the actual urban area",
+          "Recalculate distance-based accessibility",
+          "Compare results before and after study area refinement"
+        ]
+      }
+    ],
+    pipelineLabels: [
+      "1. Walk network",
+      "2. Health facilities",
+      "3. Clip population raster",
+      "4. Population grid",
+      "5. Population grid 300 m",
+      "6. Health reprojection + capacity",
+      "7. Urban mask",
+      "8. Clip grid to urban mask",
+      "9. Nearest accessibility"
+    ],
+    codeTitle1: "Python — walk network preprocessing",
+    codeTitle2: "Python — nearest healthcare accessibility",
+    codeDesc1: "OSMnx → walk network → nodes / edges → GeoJSON",
+    codeDesc2: "population grid → nearest facility → dist_m / access_score",
+    codeLoadError: "Code loading error"
+  },
+
+  fr: {
+    introTitle: "Cas",
+    introText:
+      "Ce cas examine l'accessibilité piétonne à l'infrastructure de santé dans l'espace urbain de Dakar. J'ai construit un pipeline SIG fonctionnel à partir d'OpenStreetMap, de WorldPop et de Python afin de mesurer à quel point l'accès au service de santé le plus proche est inégalement réparti dans la ville.",
+    keyFindingsTitle: "Résultats clés",
+    keyFindings: [
+      "Distance médiane au service de santé le plus proche : ~1.05 km",
+      "25% des cellules peuplées se trouvent à moins de 457 m",
+      "25% des cellules peuplées sont à plus de 4.12 km",
+      "Le tissu urbain central est mieux desservi que les périphéries"
+    ],
+    maps: "Cartes",
+    pdf: "PDF",
+    workflow: "Workflow",
+    python: "Python / GeoPandas",
+    pipelineTitle: "Full pipeline",
+    pipelineIntro: "Séquence complète des scripts utilisés dans ce cas.",
+    pdfOpen: "Ouvrir le PDF",
+    fileOpen: "Ouvrir le fichier",
+    copy: "Copier",
+    copied: "Copié",
+    imageTitles: [
+      "Distance jusqu'au service de santé le plus proche",
+      "Score simple d'accessibilité aux soins"
+    ],
+    pdfTitles: ["Dakar Healthcare Access Proxy — Field Brief"],
+    workflowItems: [
+      {
+        title: "Workflow 1 — nearest facility accessibility model",
+        steps: [
+          "Téléchargement du réseau piétonnier de Dakar depuis OSM",
+          "Extraction des établissements de santé depuis OSM",
+          "Découpage du raster WorldPop sur la zone d’étude",
+          "Conversion du raster de population en grille et agrégation à 300 m",
+          "Calcul de la distance entre les cellules peuplées et l’établissement le plus proche",
+          "Calcul d’un score simple d’accessibilité",
+          "Export de la couche SIG finale"
+        ]
+      },
+      {
+        title: "Workflow 2 — urban mask and study area refinement",
+        steps: [
+          "Reprojection du réseau viaire dans une projection métrique",
+          "Création d’un buffer autour du réseau",
+          "Fusion des buffers en un masque urbain unique",
+          "Découpage de la grille de population à la zone urbaine réelle",
+          "Recalcul de l’accessibilité basée sur la distance",
+          "Comparaison des résultats avant et après l’affinement de la zone d’étude"
+        ]
+      }
+    ],
+    pipelineLabels: [
+      "1. Walk network",
+      "2. Health facilities",
+      "3. Clip population raster",
+      "4. Population grid",
+      "5. Population grid 300 m",
+      "6. Health reprojection + capacity",
+      "7. Urban mask",
+      "8. Clip grid to urban mask",
+      "9. Nearest accessibility"
+    ],
+    codeTitle1: "Python — prétraitement du réseau piétonnier",
+    codeTitle2: "Python — accessibilité au service de santé le plus proche",
+    codeDesc1: "OSMnx → walk network → nodes / edges → GeoJSON",
+    codeDesc2: "population grid → nearest facility → dist_m / access_score",
+    codeLoadError: "Erreur de chargement du code"
+  }
+};
+---
+
+<SiteLayout2 pageTranslations={pageTranslations}>
+  <style>
+    .block {
+      --case-border: #d9e1ea;
+      --case-surface: rgba(255, 255, 255, 0.96);
+      --case-surface-muted: #fbfdff;
+      --case-heading: #1d3d67;
+      --case-subheading: #284a73;
+      --case-text: #425b78;
+      --case-muted: #5d6f86;
+      --case-link: #174b87;
+
+      background: var(--case-surface);
+      padding: 26px 24px;
+      border-radius: 18px;
+      margin-bottom: 24px;
+      border: 1px solid var(--case-border);
+      box-shadow: 0 8px 20px rgba(40, 60, 90, 0.05);
+    }
+
+    .block h2 {
+      margin: 0 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e8edf3;
+      color: var(--case-heading);
+      font-size: 28px;
+      letter-spacing: -0.02em;
+    }
+
+    .intro-text {
+      color: var(--case-text);
+      line-height: 1.72;
+      font-size: 15px;
+      margin-bottom: 18px;
+      max-width: 950px;
+    }
+
+    .findings-title {
+      color: var(--case-subheading);
+      margin: 22px 0 12px;
+      font-size: 18px;
+    }
+
+    .findings-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--case-text);
+      line-height: 1.8;
+      list-style-type: disc;
+    }
+
+    .findings-list li {
+      margin-bottom: 4px;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .image-card {
+      background: #fff;
+      border: 1px solid #dde5ed;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .image-card img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    .image-caption {
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--case-muted);
+    }
+
+    .image-caption a {
+      color: var(--case-link);
+      font-weight: 600;
+    }
+
+    .pdf-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .pdf-card {
+      background: var(--case-surface-muted);
+      border: 1px solid #e1e8f0;
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .pdf-card h3 {
+      margin: 0 0 12px;
+      color: var(--case-subheading);
+      font-size: 18px;
+    }
+
+    .pdf-card a {
+      color: var(--case-link);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .workflow-item {
+      background: var(--case-surface-muted);
+      border: 1px solid #e1e8f0;
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .workflow-item h3 {
+      margin: 0 0 14px;
+      color: var(--case-subheading);
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .workflow-item ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      line-height: 1.75;
+      color: var(--case-text);
+      list-style-type: disc;
+    }
+
+    .workflow-item li {
+      margin-bottom: 6px;
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .pipeline-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--case-surface-muted);
+      border: 1px solid #e1e8f0;
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .pipeline-card h3 {
+      margin: 0;
+      color: var(--case-subheading);
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .pipeline-card a {
+      color: var(--case-link);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .code-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+
+    .code-card {
+      background: var(--case-surface-muted);
+      border: 1px solid #e1e8f0;
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .code-card h3 {
+      margin: 0 0 12px;
+      color: var(--case-subheading);
+    }
+
+    .code-description {
+      margin-bottom: 14px;
+      color: #5b6d85;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .code-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .code-top a {
+      color: var(--case-link);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .btn {
+      background: var(--case-link);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      opacity: 0.92;
+    }
+
+    .code-block {
+      background: #0f1722;
+      color: #d9e7ff;
+      padding: 16px;
+      border-radius: 12px;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      overflow-x: auto;
+      overflow-y: auto;
+      line-height: 1.55;
+      max-height: 420px;
+      font-size: 13px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    .code-card,
+    .code-block,
+    .pipeline-card,
+    .workflow-item,
+    .pdf-card,
+    .image-card {
+      min-width: 0;
+    }
+
+    .code-card h3,
+    .code-description,
+    .code-top a,
+    .pipeline-card h3,
+    .image-caption a,
+    .pdf-card h3,
+    .workflow-item h3,
+    .block p,
+    .block li {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (max-width: 1100px) {
+      .pipeline-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .image-grid,
+      .workflow-grid,
+      .pipeline-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .block {
+        padding: 18px 16px;
+        border-radius: 14px;
+      }
+
+      .block h2 {
+        font-size: 22px;
+        line-height: 1.2;
+      }
+
+      .block h3,
+      .code-card h3,
+      .pipeline-card h3,
+      .workflow-item h3,
+      .pdf-card h3 {
+        font-size: 17px;
+        line-height: 1.3;
+      }
+
+      .code-card,
+      .pipeline-card,
+      .workflow-item,
+      .pdf-card {
+        padding: 16px;
+        border-radius: 12px;
+      }
+
+      .code-top {
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .code-block {
+        font-size: 11px;
+        padding: 12px;
+      }
+    }
+  </style>
+
+  <!-- 1. Description / context -->
+  <div class="block">
+    <h2 id="intro-heading">{translations.ru.introTitle}</h2>
+    <div class="intro-text" id="intro-text">{translations.ru.introText}</div>
+
+    <h3 class="findings-title" id="findings-heading">{translations.ru.keyFindingsTitle}</h3>
+
+    <ul class="findings-list" id="findings-list">
+      {translations.ru.keyFindings.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- 2. Maps -->
+  <div class="block">
+    <h2 id="maps-heading">{translations.ru.maps}</h2>
+
+    <div class="image-grid">
+      {images.map((item, index) => (
+        <div class="image-card">
+          <a href={item.src} target="_blank" rel="noopener noreferrer">
+            <img src={item.src} alt={`dakar-image-${index + 1}`} />
+          </a>
+          <div class="image-caption">
+            <a href={item.src} target="_blank" rel="noopener noreferrer" id={`image-title-${index}`}>
+              {translations.ru.imageTitles[index]}
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 3. PDFs -->
+  <div class="block">
+    <h2 id="pdf-heading">{translations.ru.pdf}</h2>
+
+    <div class="pdf-grid">
+      {pdfs.map((pdf, index) => (
+        <div class="pdf-card">
+          <h3 id={`pdf-title-${index}`}>{translations.ru.pdfTitles[index]}</h3>
+          <a href={pdf.file} target="_blank" rel="noopener noreferrer" class="pdf-open">
+            {translations.ru.pdfOpen}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 4. Workflow -->
+  <div class="block">
+    <h2 id="workflow-heading">{translations.ru.workflow}</h2>
+
+    <div class="workflow-grid">
+      {translations.ru.workflowItems.map((wf, wfIndex) => (
+        <div class="workflow-item">
+          <h3 id={`workflow-title-${wfIndex}`}>{wf.title}</h3>
+          <ul id={`workflow-steps-${wfIndex}`}>
+            {wf.steps.map((step) => (
+              <li>{step}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 5. Code blocks -->
+  <div class="block">
+    <h2 id="python-heading">{translations.ru.python}</h2>
+
+    <div class="code-grid">
+      <div class="code-card">
+        <h3 id="code-title-1">{translations.ru.codeTitle1}</h3>
+
+        <div class="code-description" id="code-desc-1">{translations.ru.codeDesc1}</div>
+
+        <div class="code-top">
+          <a
+            href="/assets/dakar/code/dakar_walk_network.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="code-open"
+          >
+            {translations.ru.fileOpen}
+          </a>
+          <button type="button" class="btn copy-btn" onclick="copyCode('code1', this)">
+            {translations.ru.copy}
+          </button>
+        </div>
+
+        <pre class="code-block" id="code1">Загрузка...</pre>
+      </div>
+
+      <div class="code-card">
+        <h3 id="code-title-2">{translations.ru.codeTitle2}</h3>
+
+        <div class="code-description" id="code-desc-2">{translations.ru.codeDesc2}</div>
+
+        <div class="code-top">
+          <a
+            href="/assets/dakar/code/accessibility_nearest.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="code-open"
+          >
+            {translations.ru.fileOpen}
+          </a>
+          <button type="button" class="btn copy-btn" onclick="copyCode('code2', this)">
+            {translations.ru.copy}
+          </button>
+        </div>
+
+        <pre class="code-block" id="code2">Загрузка...</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Full pipeline -->
+  <div class="block">
+    <h2 id="pipeline-heading">{translations.ru.pipelineTitle}</h2>
+    <div class="intro-text" id="pipeline-intro">{translations.ru.pipelineIntro}</div>
+
+    <div class="pipeline-grid">
+      {pipelineFiles.map((file, index) => (
+        <div class="pipeline-card">
+          <h3 id={`pipeline-label-${index}`}>{translations.ru.pipelineLabels[index]}</h3>
+          <a href={file} target="_blank" rel="noopener noreferrer" class="code-open">
+            {translations.ru.fileOpen}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <script define:vars={{ translations, codeFetchTargets }}>
+    const i18n = translations;
+    const LANG_KEY = "lang";
+
+    /** [element id, key on current locale bundle] */
+    const staticTextFields = [
+      ["intro-heading", "introTitle"],
+      ["intro-text", "introText"],
+      ["findings-heading", "keyFindingsTitle"],
+      ["maps-heading", "maps"],
+      ["pdf-heading", "pdf"],
+      ["workflow-heading", "workflow"],
+      ["python-heading", "python"],
+      ["pipeline-heading", "pipelineTitle"],
+      ["pipeline-intro", "pipelineIntro"],
+      ["code-title-1", "codeTitle1"],
+      ["code-title-2", "codeTitle2"],
+      ["code-desc-1", "codeDesc1"],
+      ["code-desc-2", "codeDesc2"]
+    ];
+
+    function setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    function fillListElement(id, items) {
+      const root = document.getElementById(id);
+      if (!root) return;
+      root.replaceChildren(
+        ...items.map((text) => {
+          const li = document.createElement("li");
+          li.textContent = text;
+          return li;
+        })
+      );
+    }
+
+    function applyIndexedTitles(prefix, titles) {
+      titles.forEach((title, index) => {
+        setText(`${prefix}-${index}`, title);
+      });
+    }
+
+    function applyDakarCopy(lang) {
+      const t = i18n[lang];
+      if (!t) return;
+
+      for (const [id, key] of staticTextFields) {
+        setText(id, t[key]);
+      }
+
+      fillListElement("findings-list", t.keyFindings);
+
+      t.workflowItems.forEach((wf, wfIndex) => {
+        setText(`workflow-title-${wfIndex}`, wf.title);
+        fillListElement(`workflow-steps-${wfIndex}`, wf.steps);
+      });
+
+      applyIndexedTitles("pipeline-label", t.pipelineLabels);
+      applyIndexedTitles("image-title", t.imageTitles);
+      applyIndexedTitles("pdf-title", t.pdfTitles);
+
+      document.querySelectorAll(".pdf-open").forEach((el) => {
+        el.textContent = t.pdfOpen;
+      });
+      document.querySelectorAll(".code-open").forEach((el) => {
+        el.textContent = t.fileOpen;
+      });
+      document.querySelectorAll(".copy-btn").forEach((btn) => {
+        btn.textContent = t.copy;
+        btn.dataset.copyLabel = t.copy;
+        btn.dataset.copiedLabel = t.copied;
+      });
+    }
+
+    async function loadCode(id, path) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      try {
+        const res = await fetch(path);
+        if (!res.ok) throw new Error("fetch failed");
+        el.textContent = await res.text();
+      } catch {
+        const lang = localStorage.getItem(LANG_KEY) || "ru";
+        el.textContent = i18n[lang]?.codeLoadError ?? i18n.ru.codeLoadError;
+      }
+    }
+
+    window.copyCode = function (id, btn) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const text = el.textContent;
+      navigator.clipboard.writeText(text);
+
+      const copiedLabel = btn.dataset.copiedLabel || "Скопировано";
+      const copyLabel = btn.dataset.copyLabel || "Копировать";
+
+      btn.textContent = copiedLabel;
+      setTimeout(() => {
+        btn.textContent = copyLabel;
+      }, 1200);
+    };
+
+    function initDakarPage() {
+      applyDakarCopy(localStorage.getItem(LANG_KEY) || "ru");
+
+      window.addEventListener("languageChanged", (event) => {
+        applyDakarCopy(event.detail.lang);
+      });
+
+      for (const { id, path } of codeFetchTargets) {
+        loadCode(id, path);
+      }
+    }
+
+    initDakarPage();
+  </script>
+</SiteLayout2>

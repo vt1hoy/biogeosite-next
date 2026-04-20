@@ -1,0 +1,447 @@
+---
+/**
+ * Humanitarian direction / positioning — thematic page, not a GIS case.
+ */
+import SiteLayout2 from "../layouts/SiteLayout2.astro";
+
+const pageTranslations = {
+  ru: {
+    title: "Гуманитарные миссии",
+    subtitle: "Наблюдения за миссиями, организациями и ролями, в которые я хочу попасть."
+  },
+  en: {
+    title: "Humanitarian Missions",
+    subtitle: "Observations on missions, organizations and roles I want to enter."
+  },
+  fr: {
+    title: "Missions humanitaires",
+    subtitle: "Observations sur les missions, les organisations et les rôles que je vise."
+  }
+};
+
+const content = {
+  ru: {
+    introTitle: "Фокус",
+    introText:
+      "Список целевых организаций и миссий с разбором задач, требований и используемых инструментов. Использую как основу для откликов, подготовки кейсов и планирования работы в регионе.",
+    missionTitle: "Миссии",
+    noteTitle: "Примечание",
+    noteText:
+      "Для каждой миссии можно хранить страну, контекст, задачи, визуалы и свои комментарии. Потом это можно использовать как ориентир для кейсов и откликов.",
+    keyTasks: "Задачи",
+    requirementsTitle: "Требования",
+    image1: "Доступ к услугам и распределение перемещённого населения — регион Диффа, Нигер. Источник: REACH Initiative",
+    image2: "Границы застройки и дорожная сеть — Кая, Буркина-Фасо. Источник: REACH / UNHCR"
+  },
+  en: {
+    introTitle: "Focus",
+    introText:
+      "List of target organizations and missions with analysis of tasks, requirements, and tools used. Used as a base for applications, case development, and regional work planning.",
+    missionTitle: "Missions",
+    noteTitle: "Note",
+    noteText:
+      "For each mission you can store country, context, tasks, visuals and personal comments. Later this can guide cases and applications.",
+    keyTasks: "Key tasks",
+    requirementsTitle: "Requirements",
+    image1: "Access to services and displacement patterns — Diffa region, Niger. Source: REACH Initiative",
+    image2: "Urban extent and road network analysis — Kaya, Burkina Faso. Source: REACH / UNHCR"
+  },
+  fr: {
+    introTitle: "Focus",
+    introText:
+      "Liste des organisations et missions cibles avec analyse des tâches, des exigences et des outils utilisés. Utilisée comme base pour les candidatures, la préparation des cas et la planification du travail dans la région.",
+    missionTitle: "Missions",
+    noteTitle: "Note",
+    noteText:
+      "Pour chaque mission, tu peux conserver le pays, le contexte, les tâches, les visuels et tes commentaires. Ensuite cela peut guider les cas et les candidatures.",
+    keyTasks: "Tâches clés",
+    requirementsTitle: "Exigences",
+    image1: "Accès aux services et répartition des populations déplacées — région de Diffa, Niger. Source: REACH Initiative",
+    image2: "Délimitation urbaine et réseau routier — Kaya, Burkina Faso. Source: REACH / UNHCR"
+  }
+};
+
+const missions = [
+  {
+    key: "mission-1",
+    ru: {
+      title: "REACH / IMPACT — Сахель",
+      place: "Ниамей / Бамако / Уагадугу",
+      type: "оценка / доступность / перемещения / инфраструктура",
+      interest: "Оценка доступности базовых услуг (вода, медицина), анализ перемещений населения (IDP), инфраструктура и покрытие сервисов, пространственный анализ для гуманитарных оценок.",
+      note: "ГИС, QGIS, обработка данных (Excel/CSV), базовый Python, работа с OSM/WorldPop, французский или английский."
+    },
+    en: {
+      title: "REACH / IMPACT — Sahel",
+      place: "Niamey / Bamako / Ouagadougou",
+      type: "assessment / accessibility / displacement / infrastructure",
+      interest: "Accessibility of basic services (water, healthcare), displacement analysis (IDPs), infrastructure and service coverage, spatial analysis for humanitarian assessments.",
+      note: "GIS, QGIS, data handling (Excel/CSV), basic Python, OSM/WorldPop data, French or English."
+    },
+    fr: {
+      title: "REACH / IMPACT — Sahel",
+      place: "Sahel (Niamey / Bamako / Ouagadougou)",
+      type: "évaluation / accessibilité / déplacements / infrastructures",
+      interest: "Accessibilité des services de base (eau, santé), analyse des déplacements (PDI), infrastructures et couverture des services, analyse spatiale pour les évaluations humanitaires.",
+      note: "SIG, QGIS, traitement de données (Excel/CSV), Python de base, données OSM/WorldPop, français ou anglais."
+    },
+    image1: "/assets/humanitarian/images/mission1a.png",
+    image2: "/assets/humanitarian/images/mission1b.png"
+  },
+  {
+    key: "mission-2",
+    ru: {
+      title: "INSO — безопасность и доступ",
+      place: "Уагадугу / Бамако / Ниамей",
+      type: "безопасность / инциденты / доступ / маршруты",
+      interest: "Картирование инцидентов, доступ, маршруты, анализ безопасности",
+      note: "ГИС, QGIS, анализ данных, картирование инцидентов, базовый Python, английский.",
+      img1: "Кластеры насилия в центральном Мали (регион Мопти). Пространственная концентрация инцидентов указывает на устойчивые зоны нестабильности. Источник: ACLED",
+      img2: "Распределение политического насилия в Западной Африке. Высокая плотность событий формирует зоны повышенного риска и ключевые коридоры нестабильности. Источник: ACLED"
+    },
+    en: {
+      title: "INSO — security and access",
+      place: "Ouagadougou / Bamako / Niamey",
+      type: "security / incidents / access / routes",
+      interest: "Incident mapping, access constraints, route analysis, security context",
+      note: "GIS, QGIS, data analysis, mapping incidents, basic Python, English.",
+      img1: "Violence clusters in central Mali (Mopti region). Spatial concentration of events highlights persistent insecurity zones. Source: ACLED",
+      img2: "Distribution of political violence in West Africa. High event density reveals risk zones and key instability corridors across the region. Source: ACLED"
+    },
+    fr: {
+      title: "INSO — sécurité et accès",
+      place: "Ouagadougou / Bamako / Niamey",
+      type: "sécurité / incidents / accès / routes",
+      interest: "Сartographie des incidents, accès, routes, analyse sécuritaire",
+      note: "SIG, QGIS, analyse de données, cartographie des incidents, Python de base, anglais.",
+      img1: "Clusters de violence au centre du Mali (région de Mopti). La concentration spatiale des événements indique des zones d’insécurité persistantes. Source: ACLED",
+      img2: "Répartition de la violence politique en Afrique de l’Ouest. La forte densité d’événements met en évidence les zones à risque et les principaux corridors d’instabilité. Source: ACLED"
+    },
+    image1: "/assets/humanitarian/images/mission2a.png",
+    image2: "/assets/humanitarian/images/mission2b.png"
+  },
+  {
+    key: "mission-3",
+    ru: {
+      title: "WFP — логистика и снабжение",
+      place: "Дакар / Бамако / Ниамей",
+      type: "логистика / supply / доступ / маршруты",
+      interest: "Анализ маршрутов, доступность, supply chains, распределение",
+      note: "ГИС, QGIS, понимание логистики, анализ данных, базовый Python, английский",
+      img1: "Хроническое недоедание и зоны AIC — Буркина-Фасо. Пространственное распределение уязвимости и уровней продовольственной нестабильности, используемое для приоритизации гуманитарной помощи. Источник: WFP",
+      img2: "Зоны хронического недоедания — Нигер. Региональная дифференциация продовольственной нестабильности, отражающая концентрацию кризисных территорий и приоритетные зоны вмешательства. Источник: WFP"
+    },
+    en: {
+      title: "WFP — logistics and supply",
+      place: "Dakar / Bamako / Niamey",
+      type: "logistics / supply / access / routes",
+      interest: "route analysis, accessibility, supply chains, distribution mapping",
+      note: "GIS, QGIS, logistics understanding, data analysis, basic Python, English",
+      img1: "Chronic malnutrition and AIC zones — Burkina Faso. Spatial distribution of vulnerability and food insecurity levels used for prioritizing humanitarian assistance. Source: WFP",
+      img2: "Chronic malnutrition zones — Niger. Regional differentiation of food insecurity highlighting crisis areas and priority zones for intervention. Source: WFP"
+    },
+    fr: {
+      title: "WFP — logistique et approvisionnement",
+      place: "Dakar / Bamako / Niamey",
+      type: "logistique / supply / accès / routes",
+      interest: "analyse des routes, accessibilité, supply chains, distribution",
+      note: "SIG, QGIS, compréhension logistique, analyse de données, Python de base, anglais",
+      img1: "Malnutrition chronique et zones AIC — Burkina Faso. Répartition spatiale de la vulnérabilité et des niveaux d’insécurité alimentaire utilisée pour prioriser l’aide humanitaire. Source : WFP",
+      img2: "Zones de malnutrition chronique — Niger. Différenciation régionale de l’insécurité alimentaire mettant en évidence les zones de crise et les priorités d’intervention. Source : WFP"
+    },
+    image1: "/assets/humanitarian/images/mission3a.png",
+    image2: "/assets/humanitarian/images/mission3b.png"
+  }
+];
+---
+
+<SiteLayout2 pageTranslations={pageTranslations}>
+  <style>
+    .human-page {
+      --human-border: #d9e1ea;
+      --human-surface: rgba(255, 255, 255, 0.96);
+      --human-heading: #1d3d67;
+      --human-text: #425b78;
+      --human-muted: #5d6f86;
+      --human-accent: #174b87;
+      --human-line: #e8edf3;
+      --human-inner: #fbfdff;
+      --human-inner-line: #e1e8f0;
+    }
+
+    .human-section {
+      margin-top: 28px;
+    }
+
+    .human-section:first-of-type {
+      margin-top: 0;
+    }
+
+    .intro-card {
+      background: var(--human-surface);
+      border: 1px solid var(--human-border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 8px 20px rgba(40, 60, 90, 0.05);
+    }
+
+    .intro-card h2 {
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--human-line);
+      color: var(--human-heading);
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .intro-card p {
+      margin: 0;
+      line-height: 1.75;
+      color: var(--human-text);
+      font-size: 15px;
+    }
+
+    .missions-heading {
+      margin: 0 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--human-line);
+      color: var(--human-heading);
+      font-size: 24px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .missions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .mission-card {
+      background: var(--human-surface);
+      border: 1px solid var(--human-border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 8px 20px rgba(40, 60, 90, 0.05);
+      min-width: 0;
+    }
+
+    .mission-head {
+      margin-bottom: 14px;
+    }
+
+    .mission-head h3 {
+      margin: 0;
+      font-size: 22px;
+      color: var(--human-heading);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .mission-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .meta-pill {
+      background: #eef4fb;
+      color: var(--human-accent);
+      border: 1px solid #d7e2ef;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .mission-text {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .mission-text-block {
+      background: var(--human-inner);
+      border: 1px solid var(--human-inner-line);
+      border-radius: 14px;
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .mission-text-block h4 {
+      margin: 0 0 10px;
+      color: #284a73;
+      font-size: 16px;
+    }
+
+    .mission-text-block p {
+      margin: 0;
+      color: var(--human-text);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .mission-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mission-image-card {
+      background: #fff;
+      border: 1px solid #dde5ed;
+      border-radius: 16px;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .mission-image-card img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    .mission-image-caption {
+      padding: 12px 14px;
+      font-size: 14px;
+      color: var(--human-muted);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      .mission-text,
+      .mission-gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .intro-card,
+      .mission-card {
+        padding: 18px 16px;
+        border-radius: 14px;
+      }
+
+      .missions-heading {
+        font-size: 20px;
+      }
+
+      .mission-head h3 {
+        font-size: 20px;
+      }
+
+      .missions-list {
+        gap: 18px;
+      }
+    }
+  </style>
+
+  <div class="human-page">
+    <section class="human-section" aria-labelledby="intro-title">
+      <div class="intro-card">
+        <h2 id="intro-title">{content.ru.introTitle}</h2>
+        <p id="intro-text">{content.ru.introText}</p>
+      </div>
+    </section>
+
+    <section class="human-section" aria-labelledby="missions-title">
+      <h2 class="missions-heading" id="missions-title">{content.ru.missionTitle}</h2>
+
+      <div class="missions-list">
+        {missions.map((mission) => (
+          <article class="mission-card" aria-labelledby={`${mission.key}-title`}>
+            <div class="mission-head">
+              <h3 id={`${mission.key}-title`}>{mission.ru.title}</h3>
+            </div>
+
+            <div class="mission-meta">
+              <span class="meta-pill" id={`${mission.key}-place`}>{mission.ru.place}</span>
+              <span class="meta-pill" id={`${mission.key}-type`}>{mission.ru.type}</span>
+            </div>
+
+            <div class="mission-text">
+              <div class="mission-text-block">
+                <h4 id={`${mission.key}-keyTasks-title`}>{content.ru.keyTasks}</h4>
+                <p id={`${mission.key}-interest`}>{mission.ru.interest}</p>
+              </div>
+
+              <div class="mission-text-block">
+                <h4 id={`${mission.key}-requirements-title`}>{content.ru.requirementsTitle}</h4>
+                <p id={`${mission.key}-requirements`}>{mission.ru.note}</p>
+              </div>
+            </div>
+
+            <div class="mission-gallery">
+              <div class="mission-image-card">
+                <a href={mission.image1} target="_blank" rel="noopener noreferrer">
+                  <img src={mission.image1} alt={`${mission.key}-image-1`} />
+                </a>
+                <div class="mission-image-caption" id={`${mission.key}-img1`}>
+                  {content.ru.image1}
+                </div>
+              </div>
+
+              <div class="mission-image-card">
+                <a href={mission.image2} target="_blank" rel="noopener noreferrer">
+                  <img src={mission.image2} alt={`${mission.key}-image-2`} />
+                </a>
+                <div class="mission-image-caption" id={`${mission.key}-img2`}>
+                  {content.ru.image2}
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <script define:vars={{ content, missions }}>
+    const i18n = content;
+    const missionRows = missions;
+    const LANG_KEY = "lang";
+
+    function setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    function applyHumanitarianCopy(lang) {
+      const c = i18n[lang];
+      if (!c) return;
+
+      setText("intro-title", c.introTitle);
+      setText("intro-text", c.introText);
+      setText("missions-title", c.missionTitle);
+
+      for (const mission of missionRows) {
+        const t = mission[lang];
+        if (!t) continue;
+
+        setText(`${mission.key}-title`, t.title);
+        setText(`${mission.key}-place`, t.place);
+        setText(`${mission.key}-type`, t.type);
+        setText(`${mission.key}-interest`, t.interest);
+        setText(`${mission.key}-requirements`, t.note);
+        setText(`${mission.key}-keyTasks-title`, c.keyTasks);
+        setText(`${mission.key}-requirements-title`, c.requirementsTitle);
+        setText(`${mission.key}-img1`, t.img1 || c.image1);
+        setText(`${mission.key}-img2`, t.img2 || c.image2);
+      }
+    }
+
+    function initHumanitarianPage() {
+      applyHumanitarianCopy(localStorage.getItem(LANG_KEY) || "ru");
+
+      window.addEventListener("languageChanged", (event) => {
+        applyHumanitarianCopy(event.detail.lang);
+      });
+    }
+
+    initHumanitarianPage();
+  </script>
+</SiteLayout2>

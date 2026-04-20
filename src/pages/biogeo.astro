@@ -1,0 +1,486 @@
+---
+/**
+ * BIOGEO concept page — jetton / project positioning. Not a GIS case page.
+ */
+import SiteLayout2 from "../layouts/SiteLayout2.astro";
+
+const pageTranslations = {
+  ru: {
+    title: "BIOGEO",
+    subtitle: "Jetton на TON, связанный с ростом проекта, полевым вектором и дистрибуцией в Африке."
+  },
+  en: {
+    title: "BIOGEO",
+    subtitle: "A TON jetton tied to project growth, field direction and distribution in Africa."
+  },
+  fr: {
+    title: "BIOGEO",
+    subtitle: "Un jetton TON lié à la croissance du projet, à la direction terrain et à la distribution en Afrique."
+  }
+};
+
+const content = {
+  ru: {
+    metricsTitle: "Live metrics",
+    ideaTitle: "Идея",
+    tokenomicsTitle: "Токеномика",
+    linksTitle: "On-chain / ссылки",
+    roadmapTitle: "Дорожная карта",
+    notesTitle: "Примечания",
+    openLink: "Открыть",
+
+    metrics: [
+      { label: "Цена", value: "$0.0000" },
+      { label: "Market cap", value: "—" },
+      { label: "Liquidity", value: "—" },
+      { label: "24h volume", value: "—" },
+      { label: "Total supply", value: "—" },
+      { label: "Last update", value: "manual" }
+    ],
+
+    idea: [
+      "BIOGEO — это токен, встроенный в реальный полевой проект: GIS-анализ, Африка, гуманитарные миссии и сеть контактов.",
+      "Ценность токена формируется не рынком, а накоплением реальных действий: карт, данных, присутствия на земле и социального капитала.",
+      "Это попытка связать цифровой актив с физическим пространством и долгосрочной экспансией в регионе (Сахель)."
+    ],
+
+    tokenomics: [
+      "Общий supply: 5 000 000 BIOGEO",
+      "Сеть: TON (jetton)",
+      "Ликвидность: STON.fi"
+    ],
+
+    roadmap: [
+      "Этап 1 — запуск токена и базовой инфраструктуры",
+      "Этап 2 — сбор портфолио GIS и формирование публичного образа",
+      "Этап 3 — переезд в Африку (Дакар) и первые контакты на месте",
+      "Этап 4 — дистрибуция токена через локальные связи и проекты",
+      "Этап 5 — закрепление в регионе и расширение сети"
+    ],
+
+    notes: [
+      "Токен не гарантирует рост и не является инвестиционным инструментом.",
+      "Ценность напрямую зависит от активности и развития проекта.",
+      "Это долгосрочный эксперимент на стыке географии, крипты и социальной динамики."
+    ]
+  },
+
+  en: {
+    metricsTitle: "Live metrics",
+    ideaTitle: "Idea",
+    tokenomicsTitle: "Tokenomics",
+    linksTitle: "On-chain / links",
+    roadmapTitle: "Roadmap",
+    notesTitle: "Notes",
+    openLink: "Open",
+
+    metrics: [
+      { label: "Price", value: "$0.0000" },
+      { label: "Market cap", value: "—" },
+      { label: "Liquidity", value: "—" },
+      { label: "24h volume", value: "—" },
+      { label: "Total supply", value: "—" },
+      { label: "Last update", value: "manual" }
+    ],
+
+    idea: [
+      "BIOGEO is a token embedded into a real field project: GIS analysis, Africa, humanitarian missions and network building.",
+      "Token value is driven not by speculation, but by accumulated actions: maps, data, field presence and social capital.",
+      "It is an attempt to link a digital asset with physical territory and long-term expansion in the Sahel."
+    ],
+
+    tokenomics: [
+      "Total supply: 5,000,000 BIOGEO",
+      "Network: TON (jetton)",
+      "Liquidity: STON.fi"
+    ],
+
+    roadmap: [
+      "Stage 1 — token launch and base infrastructure",
+      "Stage 2 — GIS portfolio and public identity building",
+      "Stage 3 — relocation to Africa (Dakar) and initial ground contacts",
+      "Stage 4 — token distribution through local networks and projects",
+      "Stage 5 — regional consolidation and network expansion"
+    ],
+
+    notes: [
+      "This token does not guarantee growth and is not an investment instrument.",
+      "Its value depends directly on project activity and development.",
+      "This is a long-term experiment at the intersection of geography, crypto and social dynamics."
+    ]
+  },
+
+  fr: {
+    metricsTitle: "Live metrics",
+    ideaTitle: "Idée",
+    tokenomicsTitle: "Tokenomics",
+    linksTitle: "On-chain / liens",
+    roadmapTitle: "Roadmap",
+    notesTitle: "Notes",
+    openLink: "Ouvrir",
+
+    metrics: [
+      { label: "Prix", value: "$0.0000" },
+      { label: "Market cap", value: "—" },
+      { label: "Liquidity", value: "—" },
+      { label: "24h volume", value: "—" },
+      { label: "Total supply", value: "—" },
+      { label: "Last update", value: "manuel" }
+    ],
+
+    idea: [
+      "BIOGEO est un token intégré dans un projet de terrain réel : analyse SIG, Afrique, missions humanitaires et réseau.",
+      "La valeur du token ne vient pas de la spéculation mais des actions accumulées : cartes, données, présence sur le terrain et capital social.",
+      "C’est une tentative de lier un actif numérique à un territoire physique et à une expansion à long terme au Sahel."
+    ],
+
+    tokenomics: [
+      "Supply total : à remplir manuellement",
+      "Liquidité : à remplir manuellement",
+      "Réserve / treasury : à remplir manuellement",
+      "Allocation communauté : à remplir manuellement",
+      "Allocation fondateur : à remplir manuellement",
+      "Logique de distribution : circulation et distribution sur 5 ans"
+    ],
+
+    roadmap: [
+      "Étape 1 — lancement du token et infrastructure de base",
+      "Étape 2 — création du portfolio SIG et identité publique",
+      "Étape 3 — installation en Afrique (Dakar) et premiers contacts",
+      "Étape 4 — distribution du token via réseaux et projets locaux",
+      "Étape 5 — consolidation régionale et expansion du réseau"
+    ],
+
+    notes: [
+      "Ce token ne garantit pas de croissance et n’est pas un instrument d’investissement.",
+      "Sa valeur dépend directement de l’activité et du développement du projet.",
+      "C’est une expérience à long terme à l’intersection de la géographie, de la crypto et des dynamiques sociales."
+    ]
+  }
+};
+
+const links = [
+  { key: "tonviewer", label: "Tonviewer", href: "https://tonviewer.com/EQCILBL6c9O3SzAeFapTJ9duy62grlp51QVMjx5SkBTQ72-8" },
+  { key: "stonfi", label: "STON.fi", href: "https://app.ston.fi/" },
+  { key: "contract", label: "Contract", href: "https://tonviewer.com/" },
+  { key: "wallet", label: "Treasury wallet", href: "https://tonviewer.com/" }
+];
+---
+
+<SiteLayout2 pageTranslations={pageTranslations}>
+  <style>
+    .biogeo-page {
+      --bio-border: #d9e1ea;
+      --bio-surface: rgba(255, 255, 255, 0.96);
+      --bio-muted: #fbfdff;
+      --bio-heading: #1d3d67;
+      --bio-subheading: #284a73;
+      --bio-text: #425b78;
+      --bio-caption: #5d6f86;
+      --bio-link: #174b87;
+      --bio-line: #e8edf3;
+    }
+
+    .biogeo-section {
+      margin-top: 28px;
+    }
+
+    .biogeo-section:first-of-type {
+      margin-top: 0;
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--bio-surface);
+      border: 1px solid var(--bio-border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 8px 20px rgba(40, 60, 90, 0.05);
+    }
+
+    .card h2 {
+      margin: 0 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--bio-line);
+      color: var(--bio-heading);
+      font-size: 24px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .card p,
+    .card li {
+      color: var(--bio-text);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .list-block {
+      margin: 0;
+      padding-left: 1.25rem;
+      list-style-type: disc;
+    }
+
+    .list-block li {
+      margin-bottom: 8px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .metric-box {
+      background: var(--bio-muted);
+      border: 1px solid #e1e8f0;
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+
+    .metric-label {
+      margin: 0 0 8px;
+      font-size: 12px;
+      color: var(--bio-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+
+    .metric-value {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--bio-heading);
+      line-height: 1.2;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .link-card {
+      background: var(--bio-muted);
+      border: 1px solid #e1e8f0;
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .link-card h3 {
+      margin: 0 0 12px;
+      color: var(--bio-subheading);
+      font-size: 17px;
+      line-height: 1.3;
+    }
+
+    .link-card a {
+      color: var(--bio-link);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .card,
+    .link-card {
+      min-width: 0;
+    }
+
+    .card h2,
+    .card p,
+    .card li,
+    .link-card h3 {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (max-width: 980px) {
+      .top-grid,
+      .two-col,
+      .links-grid,
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-grid,
+      .two-col,
+      .links-grid {
+        gap: 18px;
+      }
+
+      .card {
+        padding: 18px 16px;
+        border-radius: 14px;
+      }
+
+      .card h2 {
+        font-size: 21px;
+      }
+
+      .link-card {
+        padding: 16px;
+        border-radius: 12px;
+      }
+
+      .metrics-grid {
+        gap: 12px;
+      }
+    }
+  </style>
+
+  <div class="biogeo-page">
+    <!-- Idea + live metrics -->
+    <section class="biogeo-section">
+      <div class="top-grid">
+        <div class="card">
+          <h2 id="idea-title">{content.ru.ideaTitle}</h2>
+          <ul class="list-block" id="idea-list">
+            {content.ru.idea.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 id="metrics-title">{content.ru.metricsTitle}</h2>
+          <div class="metrics-grid">
+            {content.ru.metrics.map((item, index) => (
+              <div class="metric-box">
+                <p class="metric-label" id={`metric-label-${index}`}>
+                  {item.label}
+                </p>
+                <p class="metric-value" id={`metric-value-${index}`}>
+                  {item.value}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tokenomics + roadmap -->
+    <section class="biogeo-section">
+      <div class="two-col">
+        <div class="card">
+          <h2 id="tokenomics-title">{content.ru.tokenomicsTitle}</h2>
+          <ul class="list-block" id="tokenomics-list">
+            {content.ru.tokenomics.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 id="roadmap-title">{content.ru.roadmapTitle}</h2>
+          <ul class="list-block" id="roadmap-list">
+            {content.ru.roadmap.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- On-chain links -->
+    <section class="biogeo-section">
+      <div class="card">
+        <h2 id="links-title">{content.ru.linksTitle}</h2>
+        <div class="links-grid">
+          {links.map((item, index) => (
+            <div class="link-card">
+              <h3>{item.label}</h3>
+              <a href={item.href} target="_blank" rel="noopener noreferrer" id={`open-link-${index}`}>
+                {content.ru.openLink}
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Notes -->
+    <section class="biogeo-section">
+      <div class="card">
+        <h2 id="notes-title">{content.ru.notesTitle}</h2>
+        <ul class="list-block" id="notes-list">
+          {content.ru.notes.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script define:vars={{ content }}>
+    const i18n = content;
+    const LANG_KEY = "lang";
+
+    function setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    function fillListElement(id, items) {
+      const root = document.getElementById(id);
+      if (!root) return;
+      root.replaceChildren(
+        ...items.map((text) => {
+          const li = document.createElement("li");
+          li.textContent = text;
+          return li;
+        })
+      );
+    }
+
+    function applyBiogeoCopy(lang) {
+      const t = i18n[lang];
+      if (!t) return;
+
+      setText("idea-title", t.ideaTitle);
+      setText("metrics-title", t.metricsTitle);
+      setText("tokenomics-title", t.tokenomicsTitle);
+      setText("roadmap-title", t.roadmapTitle);
+      setText("links-title", t.linksTitle);
+      setText("notes-title", t.notesTitle);
+
+      fillListElement("idea-list", t.idea);
+      fillListElement("tokenomics-list", t.tokenomics);
+      fillListElement("roadmap-list", t.roadmap);
+      fillListElement("notes-list", t.notes);
+
+      t.metrics.forEach((item, index) => {
+        setText(`metric-label-${index}`, item.label);
+        setText(`metric-value-${index}`, item.value);
+      });
+
+      document.querySelectorAll("[id^='open-link-']").forEach((el) => {
+        el.textContent = t.openLink;
+      });
+    }
+
+    function initBiogeoPage() {
+      applyBiogeoCopy(localStorage.getItem(LANG_KEY) || "ru");
+
+      window.addEventListener("languageChanged", (event) => {
+        applyBiogeoCopy(event.detail.lang);
+      });
+    }
+
+    initBiogeoPage();
+  </script>
+</SiteLayout2>

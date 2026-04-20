@@ -1,0 +1,539 @@
+---
+/**
+ * About / profile page — not a GIS case page. Content order: bio cards → gallery → portfolio PDF → notes → articles.
+ */
+import SiteLayout2 from "../layouts/SiteLayout2.astro";
+
+const pageTranslations = {
+  ru: {
+    title: "Обо мне",
+    subtitle: "Биогеография, GIS и работа в Африке"
+  },
+  en: {
+    title: "About",
+    subtitle: "Biogeography, GIS and Africa focus"
+  },
+  fr: {
+    title: "À propos",
+    subtitle: "Biogéographie, SIG et travail en Afrique"
+  }
+};
+
+const content = {
+  ru: {
+    sections: [
+      {
+        title: "МГУ им. М. В. Ломоносова",
+        text: "Экология и природопользование, кафедра биогеографии географического ф-та. Тема диплома: \"Редкие растительные сообщества Алтае-Саянского оробиома\""
+      },
+      {
+        title: "Лукойл-Пермь",
+        text: "Диспетчер ПУ / Начальник ОПС. Сентябрь 2024 - Апрель 2026. Контроль за фондом скважин, координация производственных процессов."
+      }
+    ],
+    galleryTitles: ["Вечная мерзлота, NCSCDv2", "Какао-бобы, ESG-риск", "Топография света, VIIRS data", "LTE в Африке, opencellid"],
+    docsTitle: "Портфолио",
+    docsOpen: "Открыть PDF",
+    notesTitle: "Заметки",
+    notes: [
+      "Готов к переезду",
+      "Зона интересов 12°-18° N; 15° W - 10° E, Дакар - Бамако - Уагадугу - Ниамей",
+      "Предпочтение работе в поле"
+    ],
+    booksTitle: "Избранные статьи",
+    booksOpen: "Открыть файл",
+    books: [
+      {
+        title: "Enhanced Two-Step Floating Catchment Area (E2SFCA) Method for Measuring Spatial Accessibility to Primary Healthcare",
+        file: "/assets/about/articles/article1.pdf"
+      },
+      {
+        title: "High-resolution synthetic population mapping for quantifying disparities in disaster impacts: An application in the Bangladesh Coastal Zone",
+        file: "/assets/about/articles/article2.pdf"
+      },
+      {
+        title: "A global map of travel time to cities to assess inequalities in accessibility in 2015",
+        file: "/assets/about/articles/article3.pdf"
+      },
+      {
+        title: "Humanitarian logistics network design under mixed uncertainty",
+        file: "/assets/about/articles/article4.pdf"
+      }
+    ]
+  },
+  en: {
+    sections: [
+      {
+        title: "Lomonosov Moscow State University",
+        text: "Ecology and Environmental Management, Department of Biogeography, Faculty of Geography. Thesis: \"Rare Plant Communities of the Altai–Sayan Orobiome\""
+      },
+      {
+        title: "Lukoil-Perm",
+        text: "Control Room Dispatcher (Sep 2024 – Apr 2026). Monitoring well stock, coordinating production processes"
+      }
+    ],
+    galleryTitles: ["Permafrost, NCSCDv2", "Deforestation and ESG-risk", "Thopography of Human Light, VIIRS data", "Africa LTE, OenCellID data"],
+    docsTitle: "Portfolio",
+    docsOpen: "Open PDF",
+    notesTitle: "Notes",
+    notes: [
+      "Ready to relocate",
+      "Area of interest: 12°–18° N; 15° W – 10° E (Dakar – Bamako – Ouagadougou – Niamey)",
+      "Preference for field work"
+    ],
+    booksTitle: "Selected Articles",
+    booksOpen: "Open file",
+    books: [
+      {
+        title: "Enhanced Two-Step Floating Catchment Area (E2SFCA) Method for Measuring Spatial Accessibility to Primary Healthcare",
+        file: "/assets/about/articles/article1.pdf"
+      },
+      {
+        title: "High-resolution synthetic population mapping for quantifying disparities in disaster impacts: An application in the Bangladesh Coastal Zone",
+        file: "/assets/about/articles/article2.pdf"
+      },
+      {
+        title: "A global map of travel time to cities to assess inequalities in accessibility in 2015",
+        file: "/assets/about/articles/article3.pdf"
+      },
+      {
+        title: "Humanitarian logistics network design under mixed uncertainty",
+        file: "/assets/about/articles/article4.pdf"
+      }
+    ]
+  },
+  fr: {
+    sections: [
+      {
+        title: "Université d’État de Moscou Lomonossov",
+        text: "Écologie et gestion de l’environnement, département de biogéographie, faculté de géographie. Sujet de mémoire: \"Communautés végétales rares de l’orobiome Altaï-Sayan\""
+      },
+      {
+        title: "Lukoil-Perm",
+        text: "Dispatcher (septembre 2024 – avril 2026). Suivi du parc de puits, coordination des processus de production"
+      }
+    ],
+    galleryTitles: ["Permafrost, NCSCDv2", "Deforestation and ESG-risk", "Thopography of Human Light, VIIRS data", "Africa LTE, OenCellID data"],
+    docsTitle: "Portfolio",
+    docsOpen: "Ouvrir le PDF",
+    notesTitle: "Remarques",
+    notes: [
+      "Prêt à se relocaliser",
+      "Zone d’intérêt : 12°–18° N ; 15° O – 10° E. Dakar – Bamako – Ouagadougou – Niamey",
+      "Préférence pour le travail de terrain"
+    ],
+    booksTitle: "Articles sélectionnés",
+    booksOpen: "Ouvrir le fichier",
+    books: [
+      {
+        title: "Enhanced Two-Step Floating Catchment Area (E2SFCA) Method for Measuring Spatial Accessibility to Primary Healthcare",
+        file: "/assets/about/articles/article1.pdf"
+      },
+      {
+        title: "High-resolution synthetic population mapping for quantifying disparities in disaster impacts: An application in the Bangladesh Coastal Zone",
+        file: "/assets/about/articles/article2.pdf"
+      },
+      {
+        title: "A global map of travel time to cities to assess inequalities in accessibility in 2015",
+        file: "/assets/about/articles/article3.pdf"
+      },
+      {
+        title: "Humanitarian logistics network design under mixed uncertainty",
+        file: "/assets/about/articles/article4.pdf"
+      }
+    ]
+  }
+};
+
+const gallery = [
+  { src: "/assets/about/images/portfolio.png" },
+  { src: "/assets/about/images/portfolio2.png" },
+  { src: "/assets/about/images/portfolio3.png" },
+  { src: "/assets/about/images/portfolio4.png" }
+];
+
+const docs = [{ file: "/assets/about/docs/cv.pdf" }];
+---
+
+<SiteLayout2 pageTranslations={pageTranslations}>
+  <style>
+    .about-page {
+      --about-border: #d9e1ea;
+      --about-surface: rgba(255, 255, 255, 0.96);
+      --about-heading: #1d3d67;
+      --about-text: #425b78;
+      --about-muted: #5d6f86;
+      --about-link: #174b87;
+      --about-line: #e8edf3;
+    }
+
+    .about-section {
+      margin-top: 28px;
+    }
+
+    .about-section:first-of-type {
+      margin-top: 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .about-card {
+      background: var(--about-surface);
+      border: 1px solid var(--about-border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 8px 20px rgba(40, 60, 90, 0.05);
+    }
+
+    .about-card h2 {
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--about-line);
+      color: var(--about-heading);
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+
+    .about-card p {
+      margin: 0;
+      line-height: 1.75;
+      color: var(--about-text);
+      font-size: 15px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-card {
+      background: #fff;
+      border: 1px solid #dde5ed;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(40, 60, 90, 0.05);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+
+    .gallery-caption {
+      padding: 14px 16px;
+      color: var(--about-muted);
+      font-size: 14px;
+    }
+
+    .gallery-caption a {
+      color: var(--about-link);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .doc-card {
+      background: var(--about-surface);
+      border: 1px solid var(--about-border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 8px 20px rgba(40, 60, 90, 0.05);
+    }
+
+    .doc-card h3 {
+      margin: 0 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--about-line);
+      color: var(--about-heading);
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .doc-card a {
+      color: var(--about-link);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .notes-block {
+      background: var(--about-surface);
+      border: 1px solid var(--about-border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 8px 20px rgba(40, 60, 90, 0.05);
+    }
+
+    .notes-block h2 {
+      margin: 0 0 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--about-line);
+      color: var(--about-heading);
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .notes-block ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      line-height: 1.85;
+      color: var(--about-text);
+      font-size: 15px;
+      list-style-type: disc;
+    }
+
+    .notes-block li {
+      margin-bottom: 6px;
+    }
+
+    .books-block {
+      background: var(--about-surface);
+      border: 1px solid var(--about-border);
+      border-radius: 18px;
+      padding: 22px 24px;
+      box-shadow: 0 8px 20px rgba(40, 60, 90, 0.05);
+    }
+
+    .books-block h2 {
+      margin: 0 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--about-line);
+      color: var(--about-heading);
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .article-title {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.45;
+      margin: 0 0 12px;
+      color: var(--about-heading);
+    }
+
+    .about-card,
+    .gallery-card,
+    .doc-card {
+      min-width: 0;
+    }
+
+    .about-card h2,
+    .about-card p,
+    .gallery-caption,
+    .article-title,
+    .doc-card h3 {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    @media (max-width: 900px) {
+      .about-grid,
+      .gallery-grid,
+      .docs-grid,
+      .books-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .about-grid,
+      .gallery-grid,
+      .docs-grid,
+      .books-grid {
+        gap: 16px;
+      }
+
+      .about-card,
+      .doc-card,
+      .notes-block,
+      .books-block {
+        padding: 18px 16px;
+        border-radius: 14px;
+      }
+
+      .gallery-card {
+        border-radius: 14px;
+      }
+
+      .about-card h2,
+      .doc-card h3,
+      .notes-block h2,
+      .books-block h2 {
+        font-size: 20px;
+        line-height: 1.2;
+      }
+
+      .about-card p,
+      .notes-block ul,
+      .article-title,
+      .gallery-caption {
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      .gallery-card img {
+        aspect-ratio: 16 / 11;
+      }
+    }
+  </style>
+
+  <div class="about-page">
+    <!-- Bio / experience -->
+    <section class="about-section">
+      <div class="about-grid">
+        {content.ru.sections.map((section, index) => (
+          <div class="about-card">
+            <h2 id={`section-title-${index}`}>{section.title}</h2>
+            <p id={`section-text-${index}`}>{section.text}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="about-section">
+      <div class="gallery-grid">
+        {gallery.map((item, index) => (
+          <div class="gallery-card">
+            <a href={item.src} target="_blank" rel="noopener noreferrer">
+              <img src={item.src} alt={`about-image-${index + 1}`} />
+            </a>
+            <div class="gallery-caption">
+              <a href={item.src} target="_blank" rel="noopener noreferrer" id={`gallery-title-${index}`}>
+                {content.ru.galleryTitles[index]}
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Portfolio PDF -->
+    <section class="about-section">
+      <div class="docs-grid">
+        {docs.map((doc, index) => (
+          <div class="doc-card">
+            <h3 id={`doc-title-${index}`}>{content.ru.docsTitle}</h3>
+            <a href={doc.file} target="_blank" rel="noopener noreferrer" id={`doc-open-${index}`}>
+              {content.ru.docsOpen}
+            </a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Notes -->
+    <section class="about-section">
+      <div class="notes-block">
+        <h2 id="notes-title">{content.ru.notesTitle}</h2>
+        <ul id="notes-list">
+          {content.ru.notes.map((note) => (
+            <li>{note}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Selected articles -->
+    <section class="about-section">
+      <div class="books-block">
+        <h2 id="books-title">{content.ru.booksTitle}</h2>
+
+        <div class="books-grid">
+          {content.ru.books.map((book, index) => (
+            <div class="doc-card">
+              <h3 class="article-title" id={`book-title-${index}`}>
+                {book.title}
+              </h3>
+              <a href={book.file} target="_blank" rel="noopener noreferrer" id={`book-open-${index}`}>
+                {content.ru.booksOpen}
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script define:vars={{ content }}>
+    const i18n = content;
+    const LANG_KEY = "lang";
+
+    function setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    function fillNotesList(items) {
+      const root = document.getElementById("notes-list");
+      if (!root) return;
+      root.replaceChildren(
+        ...items.map((text) => {
+          const li = document.createElement("li");
+          li.textContent = text;
+          return li;
+        })
+      );
+    }
+
+    function applyAboutCopy(lang) {
+      const t = i18n[lang];
+      if (!t) return;
+
+      t.sections.forEach((section, index) => {
+        setText(`section-title-${index}`, section.title);
+        setText(`section-text-${index}`, section.text);
+      });
+
+      t.galleryTitles.forEach((title, index) => {
+        setText(`gallery-title-${index}`, title);
+      });
+
+      document.querySelectorAll("[id^='doc-title-']").forEach((el) => {
+        el.textContent = t.docsTitle;
+      });
+      document.querySelectorAll("[id^='doc-open-']").forEach((el) => {
+        el.textContent = t.docsOpen;
+      });
+
+      setText("notes-title", t.notesTitle);
+      fillNotesList(t.notes);
+
+      setText("books-title", t.booksTitle);
+
+      t.books.forEach((book, index) => {
+        setText(`book-title-${index}`, book.title);
+        setText(`book-open-${index}`, t.booksOpen);
+      });
+    }
+
+    function initAboutPage() {
+      applyAboutCopy(localStorage.getItem(LANG_KEY) || "ru");
+
+      window.addEventListener("languageChanged", (event) => {
+        applyAboutCopy(event.detail.lang);
+      });
+    }
+
+    initAboutPage();
+  </script>
+</SiteLayout2>
