@@ -341,15 +341,17 @@ const translations = {
 
       .cta-senegal-row {
         display: flex;
-        justify-content: center;
-        gap: 14px;
         flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        width: 100%;
       }
 
       .cta-senegal-wrap .cta-senegal-btn {
-        --cta-senegal-pad-y: 24px;
-        --cta-senegal-pad-x: 44px;
-        min-width: 300px;
+        --cta-senegal-pad-y: 20px;
+        --cta-senegal-pad-x: 28px;
+        min-width: 0;
+        box-sizing: border-box;
         padding: var(--cta-senegal-pad-y) var(--cta-senegal-pad-x);
         font-size: 18px;
         font-weight: 700;
@@ -386,9 +388,7 @@ const translations = {
           0 4px 10px rgba(23, 75, 135, 0.18);
       }
 
-      .cta-senegal-wrap .cta-senegal-btn + .cta-senegal-btn {
-        margin-left: 18px;
-      }
+      
 
 
       @media (max-width: 1200px) {
@@ -428,6 +428,32 @@ const translations = {
 
         #hero-btn-sahel {
           display: none;
+        }
+
+        .cta-senegal-wrap {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+        }
+
+        .cta-senegal-row {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          gap: 16px;
+          width: 100%;
+          margin: 0 auto;
+        }
+
+        .cta-senegal-wrap .cta-senegal-btn {
+          width: 100%;
+          max-width: 280px;
+          margin: 0 auto;
+          --cta-senegal-pad-y: 18px;
+          --cta-senegal-pad-x: 18px;
+          font-size: 15px;
+          line-height: 1.2;
         }
       }
     </style>
