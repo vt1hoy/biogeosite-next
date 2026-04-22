@@ -1,0 +1,137 @@
+{
+  "/assets/about/images/ghana.png": {
+    "optimizedUrl": "/assets_optimized/about/images/ghana.webp",
+    "width": 1431,
+    "height": 1189
+  },
+  "/assets/about/images/portfolio.png": {
+    "optimizedUrl": "/assets_optimized/about/images/portfolio.webp",
+    "width": 1600,
+    "height": 1000
+  },
+  "/assets/about/images/portfolio2.png": {
+    "optimizedUrl": "/assets_optimized/about/images/portfolio2.webp",
+    "width": 1600,
+    "height": 1126
+  },
+  "/assets/about/images/portfolio3.png": {
+    "optimizedUrl": "/assets_optimized/about/images/portfolio3.webp",
+    "width": 1600,
+    "height": 667
+  },
+  "/assets/about/images/portfolio4.png": {
+    "optimizedUrl": "/assets_optimized/about/images/portfolio4.webp",
+    "width": 1600,
+    "height": 2000
+  },
+  "/assets/bamako/images/commodity_type_distance.png": {
+    "optimizedUrl": "/assets_optimized/bamako/images/commodity_type_distance.webp",
+    "width": 1600,
+    "height": 1470
+  },
+  "/assets/bamako/images/local_clustering.png": {
+    "optimizedUrl": "/assets_optimized/bamako/images/local_clustering.webp",
+    "width": 1600,
+    "height": 1470
+  },
+  "/assets/dakar/images/health_distance.png": {
+    "optimizedUrl": "/assets_optimized/dakar/images/health_distance.webp",
+    "width": 1600,
+    "height": 1479
+  },
+  "/assets/dakar/images/health_score.png": {
+    "optimizedUrl": "/assets_optimized/dakar/images/health_score.webp",
+    "width": 1600,
+    "height": 1479
+  },
+  "/assets/humanitarian/images/mission1a.png": {
+    "optimizedUrl": "/assets_optimized/humanitarian/images/mission1a.webp",
+    "width": 1600,
+    "height": 1132
+  },
+  "/assets/humanitarian/images/mission1b.png": {
+    "optimizedUrl": "/assets_optimized/humanitarian/images/mission1b.webp",
+    "width": 1600,
+    "height": 2264
+  },
+  "/assets/humanitarian/images/mission2a.png": {
+    "optimizedUrl": "/assets_optimized/humanitarian/images/mission2a.webp",
+    "width": 1000,
+    "height": 800
+  },
+  "/assets/humanitarian/images/mission2b.png": {
+    "optimizedUrl": "/assets_optimized/humanitarian/images/mission2b.webp",
+    "width": 1600,
+    "height": 1280
+  },
+  "/assets/humanitarian/images/mission3a.png": {
+    "optimizedUrl": "/assets_optimized/humanitarian/images/mission3a.webp",
+    "width": 1600,
+    "height": 1131
+  },
+  "/assets/humanitarian/images/mission3b.png": {
+    "optimizedUrl": "/assets_optimized/humanitarian/images/mission3b.webp",
+    "width": 728,
+    "height": 518
+  },
+  "/assets/images/mission1a.png": {
+    "optimizedUrl": "/assets_optimized/images/mission1a.webp",
+    "width": 1600,
+    "height": 1132
+  },
+  "/assets/images/mission1b.png": {
+    "optimizedUrl": "/assets_optimized/images/mission1b.webp",
+    "width": 1600,
+    "height": 2264
+  },
+  "/assets/images/mission2a.png": {
+    "optimizedUrl": "/assets_optimized/images/mission2a.webp",
+    "width": 1000,
+    "height": 800
+  },
+  "/assets/images/mission2b.png": {
+    "optimizedUrl": "/assets_optimized/images/mission2b.webp",
+    "width": 1600,
+    "height": 1280
+  },
+  "/assets/images/mission3a.png": {
+    "optimizedUrl": "/assets_optimized/images/mission3a.webp",
+    "width": 1600,
+    "height": 1131
+  },
+  "/assets/images/mission3b.png": {
+    "optimizedUrl": "/assets_optimized/images/mission3b.webp",
+    "width": 728,
+    "height": 518
+  },
+  "/assets/niamey/images/flood_risk_index.png": {
+    "optimizedUrl": "/assets_optimized/niamey/images/flood_risk_index.webp",
+    "width": 1600,
+    "height": 1479
+  },
+  "/assets/niamey/images/ndwi.png": {
+    "optimizedUrl": "/assets_optimized/niamey/images/ndwi.webp",
+    "width": 1600,
+    "height": 1479
+  },
+  "/assets/niamey/images/niamey.png": {
+    "optimizedUrl": "/assets_optimized/niamey/images/niamey.webp",
+    "width": 1600,
+    "height": 1479
+  },
+  "/assets/niamey/images/niamey2.png": {
+    "optimizedUrl": "/assets_optimized/niamey/images/niamey2.webp",
+    "width": 1600,
+    "height": 1479
+  },
+  "/assets/ouagadougou/images/cellid.png": {
+    "optimizedUrl": "/assets_optimized/ouagadougou/images/cellid.webp",
+    "width": 1600,
+    "height": 1479
+  },
+  "/assets/ouagadougou/images/cellid2.png": {
+    "optimizedUrl": "/assets_optimized/ouagadougou/images/cellid2.webp",
+    "width": 1600,
+    "height": 1478
+  }
+}

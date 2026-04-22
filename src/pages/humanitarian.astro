@@ -153,6 +153,9 @@ const missions = [
     image2: "/assets/humanitarian/images/mission3b.png"
   }
 ];
+function toOptimized(src) {
+  return src.replace("/assets/", "/assets_optimized/").replace(/\.(png|jpg|jpeg)$/i, ".webp");
+}
 ---
 
 <SiteLayout2 pageTranslations={pageTranslations}>
@@ -378,7 +381,11 @@ const missions = [
             <div class="mission-gallery">
               <div class="mission-image-card">
                 <a href={mission.image1} target="_blank" rel="noopener noreferrer">
-                  <img src={mission.image1} alt={`${mission.key}-image-1`} />
+                  <img
+                    src={toOptimized(mission.image1)}
+                    style="width: 100%; height: auto;"
+                    alt={`${mission.key}-image-1`}
+                  />
                 </a>
                 <div class="mission-image-caption" id={`${mission.key}-img1`}>
                   {content.ru.image1}
@@ -387,7 +394,11 @@ const missions = [
 
               <div class="mission-image-card">
                 <a href={mission.image2} target="_blank" rel="noopener noreferrer">
-                  <img src={mission.image2} alt={`${mission.key}-image-2`} />
+                  <img
+                    src={toOptimized(mission.image2)}
+                    style="width: 100%; height: auto;"
+                    alt={`${mission.key}-image-2`}
+                  />
                 </a>
                 <div class="mission-image-caption" id={`${mission.key}-img2`}>
                   {content.ru.image2}

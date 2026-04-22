@@ -26,6 +26,9 @@ const images = [
   { src: "/assets/ouagadougou/images/cellid.png" },
   { src: "/assets/ouagadougou/images/cellid2.png" }
 ];
+function toOptimized(src) {
+  return src.replace("/assets/", "/assets_optimized/").replace(/\.(png|jpg|jpeg)$/i, ".webp");
+}
 
 const pdfs = [{ file: "/assets/ouagadougou/pdf/Agrimod.pdf" }];
 
@@ -557,7 +560,11 @@ const translations = {
       {images.map((item, index) => (
         <div class="image-card">
           <a href={item.src} target="_blank" rel="noopener noreferrer">
-            <img src={item.src} alt={`ouagadougou-image-${index + 1}`} />
+            <img
+              src={toOptimized(item.src)}
+              style="width: 100%; height: auto;"
+              alt={`ouagadougou-image-${index + 1}`}
+            />
           </a>
           <div class="image-caption">
             <a href={item.src} target="_blank" rel="noopener noreferrer" id={`image-title-${index}`}>

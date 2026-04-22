@@ -26,6 +26,9 @@ const images = [
   { src: "/assets/niamey/images/flood_risk_index.png" },
   { src: "/assets/niamey/images/ndwi.png" }
 ];
+function toOptimized(src) {
+  return src.replace("/assets/", "/assets_optimized/").replace(/\.(png|jpg|jpeg)$/i, ".webp");
+}
 
 const pdfs = [{ file: "/assets/niamey/pdf/brief_niamey2.pdf" }];
 
@@ -560,7 +563,11 @@ const translations = {
       {images.map((item, index) => (
         <div class="image-card">
           <a href={item.src} target="_blank" rel="noopener noreferrer">
-            <img src={item.src} alt={`niamey-image-${index + 1}`} />
+            <img
+              src={toOptimized(item.src)}
+              style="width: 100%; height: auto;"
+              alt={`niamey-image-${index + 1}`}
+            />
           </a>
           <div class="image-caption">
             <a href={item.src} target="_blank" rel="noopener noreferrer" id={`image-title-${index}`}>

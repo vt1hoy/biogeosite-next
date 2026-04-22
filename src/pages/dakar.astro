@@ -26,6 +26,9 @@ const images = [
   { src: "/assets/dakar/images/health_distance.png" },
   { src: "/assets/dakar/images/health_score.png" }
 ];
+function toOptimized(src) {
+  return src.replace("/assets/", "/assets_optimized/").replace(/\.(png|jpg|jpeg)$/i, ".webp");
+}
 
 const pdfs = [{ file: "/assets/dakar/pdf/dakar_health_access_brief.pdf" }];
 
@@ -600,7 +603,11 @@ const translations = {
       {images.map((item, index) => (
         <div class="image-card">
           <a href={item.src} target="_blank" rel="noopener noreferrer">
-            <img src={item.src} alt={`dakar-image-${index + 1}`} />
+            <img
+              src={toOptimized(item.src)}
+              style="width: 100%; height: auto;"
+              alt={`dakar-image-${index + 1}`}
+            />
           </a>
           <div class="image-caption">
             <a href={item.src} target="_blank" rel="noopener noreferrer" id={`image-title-${index}`}>

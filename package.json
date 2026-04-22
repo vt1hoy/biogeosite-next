@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "optimize:assets": "node scripts/optimize-public-assets.mjs"
   },
   "dependencies": {
-    "astro": "^5.7.0"
+    "astro": "^5.7.0",
+    "sharp": "^0.34.3"
   }
 }

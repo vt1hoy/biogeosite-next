@@ -153,6 +153,9 @@ const gallery = [
 ];
 
 const docs = [{ file: "/assets/about/docs/cv.pdf" }];
+function toOptimized(src) {
+  return src.replace("/assets/", "/assets_optimized/").replace(/\.(png|jpg|jpeg)$/i, ".webp");
+}
 ---
 
 <SiteLayout2 pageTranslations={pageTranslations}>
@@ -415,7 +418,11 @@ const docs = [{ file: "/assets/about/docs/cv.pdf" }];
         {gallery.map((item, index) => (
           <div class="gallery-card">
             <a href={item.src} target="_blank" rel="noopener noreferrer">
-              <img src={item.src} alt={`about-image-${index + 1}`} />
+              <img
+                src={toOptimized(item.src)}
+                style="width: 100%; height: auto;"
+                alt={`about-image-${index + 1}`}
+              />
             </a>
             <div class="gallery-caption">
               <a href={item.src} target="_blank" rel="noopener noreferrer" id={`gallery-title-${index}`}>
